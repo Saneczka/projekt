@@ -1,0 +1,183 @@
+NEWS
+Introducing Vultr Marketplace: One-Click Setup for Popular Apps & Stacks
+
+
+
+Categories
+Linux Guides
+Install phpBB With Apache on Ubuntu 16.04
+Article
+
+Search articles
+Table of Contents
+Prerequisites
+Step 1: Install Apache
+Step 2: Install MySQL
+Step 3: Install PHP
+Step 4: Install phpBB
+Step 5: Create a MySQL database for phpBB
+Step 6: Install phpBB
+Step 7: Finish the installation
+Theme: 
+Was this article helpful?
+
+
+
+Try Vultr Today with
+$50 Free on Us!
+
+Get started now!
+
+Want to contribute?
+You could earn up to $300 by adding new articles!
+
+Learn more!
+Install phpBB With Apache on Ubuntu 16.04
+Last Updated: Mon, Feb 5, 2018 
+Linux Guides
+PHP
+Ubuntu
+PhpBB is an open source bulletin board program. This article will show you how to install phpBB on top of an Apache webserver on Ubuntu 16.04. It was written using phpBB 3.2.1, however the instructions provided here may also work for newer versions of phpBB.
+
+Prerequisites
+This article assumes that you have already created a Vultr Cloud Compute instance with Ubuntu 16.04 and have logged in as root.
+
+Step 1: Install Apache
+Update your repository list.
+
+apt-get update
+Install the Apache web server.
+
+apt-get install apache2
+Step 2: Install MySQL
+phpBB runs on a LAMP stack. Before phpBB can be installed, you will need to install MySQL and PHP.
+
+apt-get install mysql-server php7.0-mysql
+Once you enter the above command, you will be prompted for a MySQL password. Enter any password of your choice.
+
+Complete the installation.
+
+/usr/bin/mysql_secure_installation
+You will be asked for a password. Enter the password you just created and continue with the installation.
+
+Would you like to setup VALIDATE PASSWORD plugin? [Y/N] N
+Change the root password? [Y/N] N
+Remove anonymous users? [Y/N] Y
+Disallow root login remotely? [Y/N] Y
+Remove test database and access to it? [Y/N] Y
+Reload privilege tables now? [Y/N] Y
+Step 3: Install PHP
+You will next need to install PHP 7.0 along with some of its modules that are required by phpBB.
+
+apt-get install php7.0 php7.0-mcrypt libapache2-mod-php7.0 php7.0-curl php7.0-json php7.0-cgi php7.0-xml
+Step 4: Install phpBB
+Now that you have installed the required dependencies, you can proceed and install phpBB. Download the latest phpBB package to the webserver's root directory.
+
+cd /var/www/html
+wget https://www.phpbb.com/files/release/phpBB-3.2.1.zip
+Unzip the downloaded archive.
+
+apt-get install unzip
+unzip phpBB-3.2.1.zip
+Move the phpBB files to your server's root directory.
+
+mv ./phpBB3/* .
+Delete the default Apache index page.
+
+rm index.html
+Set the appropriate file permissions.
+
+chown -R www-data:www-data /var/www/html/
+chmod 660 images/avatars/upload/ config.php
+chmod 770 store/ cache/ files/
+Step 5: Create a MySQL database for phpBB
+Before phpBB can be installed, a MySQL database needs to be created. Access the MySQL console.
+
+mysql -u root -p
+Enter the MySQL password you created previously. Once you have logged in, create a new database.
+
+mysql>CREATE DATABASE phpbb;
+Next, create a new MySQL user and grant it privileges to the database you just created. You can replace username and password with any username and password of your own choice.
+
+mysql>GRANT ALL PRIVILEGES on phpbb.* to 'username'@'localhost' identified by 'password';
+mysql>FLUSH PRIVILEGES;
+Exit the MySQL console.
+
+mysql>exit
+Step 6: Install phpBB
+Restart the Apache web server.
+
+systemctl restart apache2
+Open a browser window and type in your server's IP address or domain name followed by /install, for example: http://{your-server-ip}/install. The phpBB installation page will appear. Click on the install tab and then on the "install" button. Enter the administrator username, password, and email of your choice and click on the "Submit" button. This will be used to login to the admin panel. In the next step you will be prompted for the MySQL parameters. You will need to enter the username, password and database name you chose in Step 6.
+
+Database type: MySQL with MySQLi Extensions
+Database server hostname or DSN: localhost
+Database server port: <leave blank>
+Database username: username
+Database password: password
+Database name: phpbb
+Prefix for tables in database: phpbb_
+Click on the "Submit" button once you have entered the data and proceed through the rest of the interactive installer. Once the installation is complete, you can click on Take me to the ACP to enter the phpBB administration panel.
+
+Step 7: Finish the installation
+Once you have completed the online installer, you must delete the install directory in order to activate your phpBB installation.
+
+cd /var/www/html
+rm -r install
+You have successfully installed phpBB.
+
+Want to contribute?
+You could earn up to $300 by adding new articles
+
+Submit your article
+Suggest an update
+Request an article
+Products
+Cloud Compute
+High Frequency Compute
+Bare Metal
+Object Storage
+Block Storage
+Dedicated Instances
+DDoS Protection
+Direct Connect
+Load Balancers
+Features
+Data Center Locations
+Advanced Network
+Control Panel
+Operating Systems
+Upload ISO
+Bring your IP space
+Marketplace
+Browse Apps
+Become a Vendor
+Resources
+FAQ
+Developers / APIs
+Vultr Docs
+Benchmarks
+Server Status
+Bug Bounty
+Coupons
+Solution Partners
+Company
+Our Team
+News
+Brand Assets
+Referral Program
+Careers
+SLA
+Legal
+Contact
+Over 40,000,000 Cloud Servers Launched
+
+Vultr Twitter Vultr Facebook Vultr Instagram Vultr LinkedIn Vultr GitHub Vultr Stack Overflow
+© Vultr 2021
+VULTR is a registered trademark of The Constant Company, LLC.
+
+Terms of Service
+AUP/DMCA
+Privacy Policy
+Cookie Policy
+
